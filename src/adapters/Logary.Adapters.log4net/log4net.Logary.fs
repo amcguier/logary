@@ -63,19 +63,9 @@ module LogaryHelpers =
     |> Seq.fold (fun m (key, value) -> m |> Map.add key value) state
 
   let formatCodeInfo (codeLocation:LocationInfo) =
-    if (isNull codeLocation) || (isNull codeLocation.StackFrames)  then String.Empty
+    if (isNull codeLocation) || (isNull codeLocation.FullInfo)  then String.Empty
     else
-      let sb = Text.StringBuilder();
-
-      codeLocation.StackFrames
-      |> Array.iteri (fun index frame ->
-          if index = 0 then
-              sb.AppendLine(frame.FullInfo) |> ignore
-          else
-            sb.AppendFormat("\tfrom {0}{1}",frame.FullInfo,Environment.NewLine) |> ignore
-      )
-
-      sb.ToString()
+      codeLocation.FullInfo
 
 open LogaryHelpers
 
